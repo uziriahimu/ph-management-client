@@ -1,52 +1,41 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
-import About from "../pages/About";
-import Contact from "../pages/Contact";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import AdminLayout from "../components/layout/AdminLayout";
-import AdminDashboard from "../pages/Admin/AdminDashboard";
-import CreateStudent from "../pages/Admin/CreateStudent";
+import { createBrowserRouter } from 'react-router-dom';
+import App from '../App';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import { adminPaths } from './admin.routes';
+import { routeGenerator } from '../utils/routesGenerator';
+import { facultyPaths } from './faculty.routes';
+import { studentPaths } from './student.routes';
+import ProtectedRoute from '../components/layout/ProtectedRoute';
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <App />,
-    children: [
-      {
-        path: "/about",
-        element: <About />,
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
-      },
-    ],
   },
   {
-    path: "/admin",
-    element: <AdminLayout />,
-    children: [
-      {
-        index: true,
-        element: <AdminDashboard />,
-      },
-      {
-        path: "createstudent",
-        element: <CreateStudent />,
-      },
-    ],
+    path: '/admin',
+    element: <App />,
+    children: routeGenerator(adminPaths),
   },
   {
-    path: "/login",
+    path: '/faculty',
+    element: <App />,
+    children: routeGenerator(facultyPaths),
+  },
+  {
+    path: '/student',
+    element: <App />,
+    children: routeGenerator(studentPaths),
+  },
+  {
+    path: '/login',
     element: <Login />,
   },
   {
-    path: "/register",
+    path: '/register',
     element: <Register />,
   },
-  {
-    path: "/login",
-    element: <Login />,
-  },
 ]);
+
+export default router;
